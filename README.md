@@ -1,2 +1,2 @@
 # Tic-Tac-Toe-game
-Classic game old school game.
+Classic old school game.
