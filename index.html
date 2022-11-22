@@ -9,6 +9,42 @@
     <title>Tic-Tac-Toe</title>
 </head>
 <body>
-    
+    <div class="form">
+        <form name="myForm" id="myForm">
+            <div class="play-info">
+                <label for="player1">Player1</label>
+                <input type="text" name="player1" id="player1">
+                <label for="player2" id="label-player2">Player2</label>
+                <input type="text" name="player2" id="player2"> <br>
+                <label for="dufficulty">Select difficulty: </label>
+                <input type="radio" id="human" value="0" name="difficulty">
+                <label for="human">Human vs. Human</label>
+                <input type="radio" id="easy" value="1" name="difficulty">
+                <label for="easy">Easy</label>
+                <input type="radio" id="hard" value="2" name="difficulty">
+                <label for="hard">Hard</label><br>
+            </div>
+            <div class="sub-res">
+                <input type="submit" value="Submit" id="submit">
+                <input type="reset" value="Reset" id="reset">
+            </div>
+        </form>
+    </div>
+    <div class="player-stats">
+        <div class="playerName1 hidden"></div>
+        <div class="vs">VS.</div>
+        <div class="playerName2 hidden"></div>
+    </div>
+    <div class="gameboard">
+        <div id="field0" value="0"></div>
+        <div id="field1" value="1"></div>
+        <div id="field2" value="2"></div>
+        <div id="field3" value="3"></div>
+        <div id="field4" value="4"></div>
+        <div id="field5" value="5"></div>
+        <div id="field6" value="6"></div>
+        <div id="field7" value="7"></div>
+        <div id="field8" value="8"></div>
+    </div>
 </body>
 </html>
