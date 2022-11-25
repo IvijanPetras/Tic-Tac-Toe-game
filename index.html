@@ -1,32 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=BhuTuka+Expanded+One&display=swap" rel="stylesheet">
     <script src="./script.js" defer></script>
     <title>Tic-Tac-Toe</title>
 </head>
+
 <body>
     <div class="form">
         <form name="myForm" id="myForm">
             <div class="play-info">
-                <label for="player1">Player1</label>
-                <input type="text" name="player1" id="player1">
-                <label for="player2" id="label-player2">Player2</label>
-                <input type="text" name="player2" id="player2"> <br>
-                <label for="dufficulty">Select difficulty: </label>
-                <input type="radio" id="human" value="0" name="difficulty">
-                <label for="human">Human vs. Human</label>
-                <input type="radio" id="easy" value="1" name="difficulty">
-                <label for="easy">Easy</label>
-                <input type="radio" id="hard" value="2" name="difficulty">
-                <label for="hard">Hard</label><br>
+                <div class="players">
+                    <input type="text" name="player1" id="player1" placeholder="Player 1">
+                    <input type="text" name="player2" id="player2" placeholder="Player 2"> <br>
+                </div>
+                <div class="modes">
+                    <label for="dufficulty">Select mode: </label>
+                    <input type="radio" id="human" value="0" name="difficulty">
+                    <label for="human">Player vs. Player</label>
+                    <input type="radio" id="AI" value="1" name="difficulty">
+                    <label for="AI">AI</label><br>
+                </div>
             </div>
             <div class="sub-res">
-                <input type="submit" value="Submit" id="submit">
-                <input type="reset" value="Reset" id="reset">
+                <input type="submit" value="Start" id="submit" class="btn btn-light">
+                <input type="reset" value="Reset" id="reset" class="btn btn-light">
             </div>
         </form>
     </div>
@@ -46,5 +51,7 @@
         <div id="field7" value="7"></div>
         <div id="field8" value="8"></div>
     </div>
+    <div class="winner hidden"></div>
 </body>
+
 </html>

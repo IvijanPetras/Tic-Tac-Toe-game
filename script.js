@@ -1,19 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // get the form and other divs
+  // get the form and elements
   const player1 = document.querySelector("#player1");
   const player2 = document.querySelector("#player2");
   const submitBtn = document.querySelector("#submit");
-  const resetBtn = document.querySelector('#reset');
+  const resetBtn = document.querySelector("#reset");
   const gameboard = document.querySelector(".gameboard");
   const form = document.querySelector("#myForm");
-  const playerInfo = document.querySelector('.player-stats');
-  const playerName1 = document.querySelector('.playerName1');
-  const playerName2 = document.querySelector('.playerName2');
+  const playerInfo = document.querySelector(".player-stats");
+  const playerName1 = document.querySelector(".playerName1");
+  const playerName2 = document.querySelector(".playerName2");
+  const winnerDisplay = document.querySelector(".winner");
   // assign values and conditions of game
   const X_MARK = "X";
   const CIRCLE_MARK = "O";
-  const pcTurn = Math.floor(Math.random() * 9);
-  let win = false;
+  let difficulty;
   let turn;
   //create array from gameboard nodes
   const init = gameboard.children;
@@ -36,37 +36,55 @@ document.addEventListener("DOMContentLoaded", () => {
   // adds listeners to each field and checks condition for win
   function addListenersForField() {
     initArr.forEach((field) => {
-      field.addEventListener(
-        "click",
-        switchPlayer,
-        { once: true }
-      );
+      field.addEventListener("click", switchPlayer, { once: true });
     });
   }
 
-  function switchPlayer(e){
+  function switchPlayer(e) {
     const switchMark = turn ? CIRCLE_MARK : X_MARK;
     nextTurn(switchMark, e);
+    // console.log(+initArr[Math.floor(Math.random() * 9)].attributes.value.value);
+    // console.log(+initArr[Math.floor(Math.random() * 9)].innerText);
+  }
+
+  function rand() {
+    return initArr[Math.floor(Math.random() * 9)];
+  }
+
+  function pcTurn(switchMark) {
+    const num = rand();
+    console.log(+num.attributes[1].value);
+    const value = num.attributes[0].ownerElement.innerText;
+    if (value === "") {
+      console.log("prazno", num);
+      num.innerText = switchMark;
+      playedMovesO.push(+num.attributes[1].value);
+    } else if (playedMovesO.length >= 4 || playedMovesX >= 5) return;
+    else if (pcTurn(switchMark));
   }
 
   // sets next players turn and checks for win
   function nextTurn(switchMark, event) {
     turn = !turn;
     event.target.innerText = switchMark;
-    console.log(switchMark);
+    if (difficulty === 1 && switchMark === "X") {
+      pcTurn("O");
+      turn = !turn;
+      checkForWin(winningCombos, playedMovesO, 'O');
+    } 
+    //     else if (difficulty === 1 && switchMark === "O") { 
+    //   pcTurn("X");
+    //   turn = !turn;
+    // } --- code for implementing AI as X player
+      
     if (switchMark === "O") {
       playedMovesO.push(+event.target.getAttribute("value"));
-      console.log(playedMovesO);
       checkForWin(winningCombos, playedMovesO, switchMark);
       return;
     }
     playedMovesX.push(+event.target.getAttribute("value"));
     checkForWin(winningCombos, playedMovesX, switchMark);
-    
-    if(switchMark == pcTurn){
-        event.target.innerText = switchMark;
-        playedMovesPc.push(pcTurn);
-    }
+    console.log(playedMovesO);
   }
 
   // goes trough each array to find matching winning combos
@@ -75,14 +93,15 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < arr1.length; i++) {
       let combination = arr1[i];
       if (winCheck(combination, arr2)) {
-        console.log("its a match");
-        win = true;
-        return alert(`Congrats ${mark} on win!`);
+        winnerDisplay.innerText = `Winner is ${mark}`;
+        winnerDisplay.classList.remove('hidden');
+        setTimeout(() => winnerDisplay.classList.add('hidden'),2500)
+        resetGame();
       }
     }
     //draw game
-    if(playedMovesX.length >= 5){
-        alert('Its a draw!');
+    if (playedMovesX.length >= 5) {
+      alert("Its a draw!");
     }
   }
   // get form info
@@ -91,37 +110,37 @@ document.addEventListener("DOMContentLoaded", () => {
     addListenersForField();
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
+    playerOne = data.player1;
     const players = playersStats(data.player1, data.player2, +data.difficulty);
     players.displayPlayers();
     console.log(players);
-    playerName1.classList.remove('hidden');
-    player1.value = '';
-    playerName2.classList.remove('hidden');
-    player2.value = '';
+    playerName1.classList.remove("hidden");
+    player1.value = "";
+    playerName2.classList.remove("hidden");
+    player2.value = "";
     if (data.difficulty == 1) {
-        playerName2.innerText = 'PC Easy'; 
-      } else if(data.difficulty == 2){
-        playerName2.innerText = 'PC Hard'; 
-      }
-
+      playerName2.innerText = "AI";
+      difficulty = 1;
+    }
   });
 
   const playersStats = (playerOne, playerTwo, difficulty) => {
     const displayPlayers = () => {
-        playerName1.innerText = playerOne;
-        playerName2.innerText = playerTwo;
+      playerName1.innerText = playerOne;
+      playerName2.innerText = playerTwo;
     };
     return { playerOne, playerTwo, difficulty, displayPlayers };
   };
-
-  // reset game button
-  resetBtn.addEventListener('click', () =>{
+  // resets all game functions
+  function resetGame() {
     initArr.forEach((field) => {
-        field.removeEventListener('click', switchPlayer);
-        field.innerText = '';
-        playedMovesX = [];
-        playedMovesO = [];
-        turn = false;
-    })
-  });
+      field.removeEventListener("click", switchPlayer);
+      field.innerText = "";
+      playedMovesX = [];
+      playedMovesO = [];
+      turn = false;
+    });
+  }
+  // reset game button
+  resetBtn.addEventListener("click", resetGame);
 });
