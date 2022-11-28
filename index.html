@@ -9,32 +9,37 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=BhuTuka+Expanded+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap" rel="stylesheet">
     <script src="./script.js" defer></script>
     <title>Tic-Tac-Toe</title>
 </head>
 
 <body>
-    <div class="form">
-        <form name="myForm" id="myForm">
-            <div class="play-info">
-                <div class="players">
-                    <input type="text" name="player1" id="player1" placeholder="Player 1">
-                    <input type="text" name="player2" id="player2" placeholder="Player 2"> <br>
-                </div>
-                <div class="modes">
-                    <label for="dufficulty">Select mode: </label>
-                    <input type="radio" id="human" value="0" name="difficulty">
-                    <label for="human">Player vs. Player</label>
-                    <input type="radio" id="AI" value="1" name="difficulty">
-                    <label for="AI">AI</label><br>
-                </div>
+    <div class="header">tictactoe</div>
+    <form name="myForm" id="myForm">
+        <div class="players">
+            <input type="text" name="player1" id="player1" placeholder="Player 1">
+            <input type="text" name="player2" id="player2" placeholder="Player 2"> <br>
+        </div>
+        <div class="modes">
+            <label for="dufficulty">Select mode: </label>
+            <div>
+                <input type="radio" id="human" value="0" name="difficulty">
+                <label for="human">Player vs. Player</label>
             </div>
-            <div class="sub-res">
-                <input type="submit" value="Start" id="submit" class="btn btn-light">
-                <input type="reset" value="Reset" id="reset" class="btn btn-light">
+            <div>
+                <input type="radio" id="AI" value="1" name="difficulty">
+                <label for="AI">AI</label><br>
             </div>
-        </form>
-    </div>
+        </div>
+
+        <div class="sub-res">
+            <input type="submit" value="Start" id="submit" class="btn btn-light">
+            <input type="reset" value="Reset" id="reset" class="btn btn-light">
+        </div>
+    </form>
     <div class="player-stats">
         <div class="playerName1 hidden"></div>
         <div class="vs">VS.</div>

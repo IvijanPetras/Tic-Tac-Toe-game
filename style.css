@@ -14,6 +14,12 @@ body {
   flex-direction: column;
 }
 
+.header {
+  font-size: 50px;
+  font-family: "Rubik Glitch", cursive;
+  color: aliceblue;
+}
+
 .gameboard {
   margin: auto;
   display: grid;
@@ -32,15 +38,17 @@ body {
 
 form {
   font-size: 20px;
-  margin: 30px;
+  margin: 0;
   height: 8rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
 }
-form > .play-info input {
+form > .players input {
   background-color: #f76c5e;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 form > .play-info label {
   padding: 10px;
@@ -49,6 +57,15 @@ form > .play-info label {
 form > .play-info {
   font-size: 25px;
   color: aliceblue;
+}
+form > .modes {
+  margin: 3px;
+}
+form > .modes > div input:hover {
+  cursor: pointer;
+}
+form > .sub-res * {
+  margin: 9px;
 }
 
 .sub-res {
@@ -60,9 +77,14 @@ form > .play-info {
 #submit,
 #reset {
   font-size: 22px;
-  background-color: aliceblue;
+  background-color: rgb(240, 248, 255);
   border-radius: 5px;
   width: 150px;
+}
+#submit:hover,
+#reset:hover {
+  background-color: rgb(201, 224, 248);
+  cursor: pointer;
 }
 
 .player-stats {
@@ -73,6 +95,7 @@ form > .play-info {
   background-color: #f76c5e;
   height: 110px;
   margin-bottom: 20px;
+  margin-top: 40px;
   font-size: 28px;
   color: aliceblue;
   width: 100%;

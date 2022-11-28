@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const resetBtn = document.querySelector("#reset");
   const gameboard = document.querySelector(".gameboard");
   const form = document.querySelector("#myForm");
-  const playerInfo = document.querySelector(".player-stats");
   const playerName1 = document.querySelector(".playerName1");
   const playerName2 = document.querySelector(".playerName2");
   const winnerDisplay = document.querySelector(".winner");
@@ -31,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
   let playedMovesX = [];
   let playedMovesO = [];
-  let playedMovesPc = [];
 
   // adds listeners to each field and checks condition for win
   function addListenersForField() {
@@ -43,16 +41,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function switchPlayer(e) {
     const switchMark = turn ? CIRCLE_MARK : X_MARK;
     nextTurn(switchMark, e);
-    // console.log(+initArr[Math.floor(Math.random() * 9)].attributes.value.value);
-    // console.log(+initArr[Math.floor(Math.random() * 9)].innerText);
   }
-
-  function rand() {
-    return initArr[Math.floor(Math.random() * 9)];
-  }
-
+  // logic for AI mode
   function pcTurn(switchMark) {
-    const num = rand();
+    const num = initArr[Math.floor(Math.random() * 9)];
     console.log(+num.attributes[1].value);
     const value = num.attributes[0].ownerElement.innerText;
     if (value === "") {
@@ -70,13 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (difficulty === 1 && switchMark === "X") {
       pcTurn("O");
       turn = !turn;
-      checkForWin(winningCombos, playedMovesO, 'O');
-    } 
-    //     else if (difficulty === 1 && switchMark === "O") { 
-    //   pcTurn("X");
-    //   turn = !turn;
-    // } --- code for implementing AI as X player
-      
+      checkForWin(winningCombos, playedMovesO, "O");
+    }
+
     if (switchMark === "O") {
       playedMovesO.push(+event.target.getAttribute("value"));
       checkForWin(winningCombos, playedMovesO, switchMark);
@@ -87,21 +75,29 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(playedMovesO);
   }
 
+  function finishedGame() {
+    winnerDisplay.classList.add("hidden");
+    playerName1.innerText = "";
+    playerName2.innerText = "";
+    resetGame();
+  }
+
   // goes trough each array to find matching winning combos
   function checkForWin(arr1, arr2, mark) {
     const winCheck = (arr1, arr2) => arr1.every((x) => arr2.includes(x));
+    //draw game
+    if (playedMovesX.length >= 5) {
+      winnerDisplay.innerText = "It's a draw!";
+      winnerDisplay.classList.remove("hidden");
+      setTimeout(finishedGame, 2500);
+    }
     for (let i = 0; i < arr1.length; i++) {
       let combination = arr1[i];
       if (winCheck(combination, arr2)) {
         winnerDisplay.innerText = `Winner is ${mark}`;
-        winnerDisplay.classList.remove('hidden');
-        setTimeout(() => winnerDisplay.classList.add('hidden'),2500)
-        resetGame();
+        winnerDisplay.classList.remove("hidden");
+        setTimeout(finishedGame, 2500);
       }
-    }
-    //draw game
-    if (playedMovesX.length >= 5) {
-      alert("Its a draw!");
     }
   }
   // get form info
